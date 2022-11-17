@@ -1,0 +1,63 @@
+package lab4;
+import javax.swing.*;
+import java.awt.image.*;
+import java.awt.*;
+
+/**
+ * This class allows us to display our fractals. 
+ * It derives from javax.swing.JComponent.
+ */
+class JImageDisplay extends JComponent
+{
+    /**
+     * обьект Buffered Image.
+     */ 
+    private BufferedImage displayImage;
+    
+    /**
+     * Метод с помощью которого можем получить изображение.
+     */
+    public BufferedImage getImage() {
+        return displayImage;
+    }
+    
+    /**
+      * конструктор с аргументами высоты и ширины.
+      */
+    public JImageDisplay(int width, int height) {
+        displayImage = new BufferedImage(width, height,
+        BufferedImage.TYPE_INT_RGB);
+        
+        /** 
+         * Передаём значения в Dimension.
+         */
+        Dimension imageDimension = new Dimension(width, height);
+        super.setPreferredSize(imageDimension);
+        
+    }
+    /**
+     * Метод отрисовки изображения.
+     */
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        g.drawImage(displayImage, 0, 0, displayImage.getWidth(),
+        displayImage.getHeight(), null);
+    }
+    /**
+     * меняет все пиксели в изображении в чёрный.
+     */
+    public void clearImage()
+    {
+        int[] blankArray = new int[getWidth() * getHeight()];
+        displayImage.setRGB(0, 0, getWidth(), getHeight(), blankArray, 0, 1);
+    }
+    /**
+     * меняет все пиксели в обозначенный цвет.
+     */
+    public void drawPixel(int x, int y, int rgbColor)
+    {
+        displayImage.setRGB(x, y, rgbColor);
+    }
+}
